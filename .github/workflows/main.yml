@@ -11,12 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: cd dosage && yarn
-
-      - name: Build
-        run: cd dosage && yarn build
-
       - name: Deploy
         uses: reggionick/s3-deploy@v4
         with:
