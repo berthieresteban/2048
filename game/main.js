@@ -8,7 +8,7 @@ $(document).ready(function () {
 
 		var gameObject = $(this).attr('id');
 		var boardSize = size+16;
-		var blockSize = size/4;
+		var blockSize = size/8;
 		
 		var i=0;
 
@@ -33,7 +33,7 @@ $(document).ready(function () {
 		$(this).append("<div class='board'></div>" );
 		$(this).append("<div class='score'></div>" );
 		$(this).append("<div class='endgame'></div>" );
-		$(this).append("<input type='range'class='changesize'min='400' step='10' value='400' max='800'>CHANGE THE SIZE OF THE 2048</input>");
+		$(this).append("<input type='range'class='changesize'min='400' step='10' value='800' max='800'>CHANGE THE SIZE OF THE 2048</input>");
 
 
 		$('input.changesize').on('input', function(){
@@ -43,21 +43,21 @@ $(document).ready(function () {
 			var size=$(this).val();
 			console.log(size);
 			var boardSize = parseInt(size)+16;
-			var blockSize = parseInt(size)/4;
+			var blockSize = parseInt(size)/8;
 			document.getElementById('boardcss').innerHTML=" .board{  width:"+boardSize+"px; height:"+boardSize+"px; } ";
 
 			document.getElementById('squarecss').innerHTML=".square-container{ width:"+blockSize+"px; height:"+blockSize+"px;display:inline; float:left;margin:1px;border:1px solid black; text-align:center;line-height:100px;box-sizing:border-box;} ";
 		});
 		
 
-		for(i=0;i<16;i++){
+		for(i=0;i<64;i++){
 			$('.board').append("<div class='square-container'></div>");	
 		}
 
 
 		randomtile(2);
 	};
-	$("#mygame").mygame(400);
+	$("#mygame").mygame(800);
 
 
 
@@ -101,7 +101,7 @@ function randomtile(param){
 	for(y=0;y<param;y++){
 		var empty=false;
 
-		for(x=0;x<16;x++)
+		for(x=0;x<64;x++)
 		{
 			if(!$("div.square-container").eq(x).text())
 				boule=true;
@@ -111,7 +111,7 @@ function randomtile(param){
 		{
 			while(!empty)
 			{
-				var rando = Math.floor(Math.random()*16);
+				var rando = Math.floor(Math.random()*64);
 				if(!$("div.square-container").eq(rando).text())
 				{
 					empty=true;
@@ -140,12 +140,12 @@ function deplacements(param)
 	{
 		var p=0,k=0,j=0;pp=0,ppp=0,added=false;
 
-		for(k=0;k<4;k++){
+		for(k=0;k<8;k++){
 		//EACH CELL OF THE FIRST LINE FROM RIGHT TO LEFT
 		var added=false;
-		for(p=0;p<=3;p++)
+		for(p=0;p<=7;p++)
 		{
-			var cell=p+(4*k);
+			var cell=p+(8*k);
 			//IF CELL PP ISNT EMPTY
 			if($("div.square-container").eq(cell).text())
 			{
@@ -194,12 +194,12 @@ else if(param===1)//UP
 {
 	var p=0,k=0,j=0;pp=0,ppp=0,added=false;
 
-	for(k=0;k<4;k++){
+	for(k=0;k<8;k++){
 		//EACH CELL OF THE FIRST LINE FROM RIGHT TO LEFT
 		var added=false;
-		for(p=0;p<=3;p++)
+		for(p=0;p<=7;p++)
 		{
-			var cell=k+(4*p);
+			var cell=k+(8*p);
 			console.log("TARGET CELL "+cell);
 
 			//IF CELL PP ISNT EMPTY
@@ -212,7 +212,7 @@ else if(param===1)//UP
 				{
 					console.log('TOURS :'+j);
 					console.log(added);
-					var ppp=pp-4;
+					var ppp=pp-8;
 
 					//IF CELL PP+1  IS EMPTY WE JUST SHIFT
 					if(!$("div.square-container").eq(ppp).text())
@@ -243,7 +243,7 @@ else if(param===1)//UP
 							$("div.square-container").eq(pp).text("");
 						}
 					}
-					pp-=4;
+					pp-=8;
 				}
 			}
 		}
@@ -256,13 +256,13 @@ else if(param===2)//right
 {
 	var p=0,k=0,j=0;pp=0,ppp=0,added=false;
 
-	for(k=0;k<4;k++){
+	for(k=0;k<8;k++){
 	//EACH CELL OF THE FIRST LINE FROM RIGHT TO LEFT
 	var added=false;
 
-	for(p=3;p>=0;p--)
+	for(p=7;p>=0;p--)
 	{
-		var cell=p+(4*k);
+		var cell=p+(8*k);
 		//IF CELL PP ISNT EMPTY
 		if($("div.square-container").eq(cell).text())
 		{
@@ -270,7 +270,7 @@ else if(param===2)//right
 			var pp=cell;
 			//PP IS THE TARGETED CELL 
 			//THE TARGETED CELL SHIFT TO RIGHT IF ITS POSSIBLE
-			for(j=(3-p);j>0;j--)
+			for(j=(7-p);j>0;j--)
 			{
 				console.log('TOURS :'+j);
 				console.log(added);
@@ -312,12 +312,12 @@ else if(param===3)//DOWN
 {
 	var p=0,k=0,j=0;pp=0,ppp=0,added=false;
 
-	for(k=0;k<4;k++){
+	for(k=0;k<8;k++){
 		//EACH CELL OF THE FIRST LINE FROM RIGHT TO LEFT
 		var added=false;
-		for(p=3;p>=0;p--)
+		for(p=7;p>=0;p--)
 		{
-			var cell=k+(4*p);
+			var cell=k+(8*p);
 			console.log("TARGET CELL "+cell);
 
 			//IF CELL PP ISNT EMPTY
@@ -326,11 +326,11 @@ else if(param===3)//DOWN
 				var pp=cell;
 				//PP IS THE TARGETED CELL 
 				//THE TARGETED CELL SHIFT TO RIGHT IF ITS POSSIBLE
-				for(j=(3-p);j>0;j--)
+				for(j=(7-p);j>0;j--)
 				{
 					console.log('TOURS :'+j);
 					console.log(added);
-					var ppp=pp+4;
+					var ppp=pp+8;
 
 					//IF CELL PP+1  IS EMPTY WE JUST SHIFT
 					if(!$("div.square-container").eq(ppp).text())
@@ -362,7 +362,7 @@ else if(param===3)//DOWN
 
 						}
 					}
-					pp+=4;
+					pp+=8;
 				}
 			}
 		}
@@ -374,7 +374,7 @@ randomtile(1);
 }
 function setcolors(){
 	var m;
-	for(m=0;m<16;m++)
+	for(m=0;m<64;m++)
 	{
 		$("div.square-container").eq(m).removeClass("c2 c4 c8 c16 c32 c64 c128 c256 c512 c1024 c2048");
 		$("div.square-container").eq(m).addClass("square-container");
